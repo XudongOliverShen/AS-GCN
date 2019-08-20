@@ -75,5 +75,5 @@ in main.py, comment out line 13, which is following:
 processors['demo'] = import_class('processor.demo.Demo')
 ```
 
-
+Another obvious typo from their [Github](https://github.com/XudongOliverShen/AS-GCN): when training on cross subject, load configurations from the directory ntu-xsub; when training on cross view, load configurations from the directory nut-xview. 
 
