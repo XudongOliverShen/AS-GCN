@@ -1,0 +1,12 @@
+#!/bin/bash
+#PBS -q normal
+#PBS -l select=1:ncpus=3:mem=12G
+#PBS -l walltime=4:00:00
+
+#PBS -N ASGCN_data_preprocess
+#PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/preprocess_output.out
+#PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/preprocess_output.err
+
+cd $PBS_O_WORKDIR
+cd /home/users/nus/e0474114/scratch/skeleton-based-action-recognition/AS-GCN/AS-GCN/data_gen
+/home/users/nus/e0474114/Packages/anaconda3/envs/py36/bin/python ntu_gen_preprocess.py
