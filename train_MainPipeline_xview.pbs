@@ -3,7 +3,7 @@
 #PBS -l select=1:ncpus=20:mem=96G:ngpus=4
 #PBS -l walltime=24:00:00
 #PBS -P 11001430
-#PBS -N train_AIM
+#PBS -N train_MP
 #PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log
 #PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log
 #PBS -koed
@@ -11,5 +11,5 @@
 cd $PBS_O_WORKDIR
 nscc-docker run --lustre --ipc=host nscc/local/pytorch:latest <<EOF
 cd /home/users/nus/e0474114/scratch/skeleton-based-action-recognition/AS-GCN/AS-GCN
-/home/users/nus/e0474114/Packages/anaconda3/envs/py36/bin/python main.py recognition -c config/as_gcn/ntu-xsub/train_aim.yaml
+/home/users/nus/e0474114/Packages/anaconda3/envs/py36/bin/python main.py recognition -c config/as_gcn/ntu-xview/continue_train.yaml
 EOF
