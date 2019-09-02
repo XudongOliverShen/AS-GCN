@@ -1,12 +1,16 @@
 #!/bin/bash
-#PBS -q normal
-#PBS -l select=1:ncpus=3:mem=12G
-#PBS -l walltime=4:00:00
-
+#PBS -q dgx
+#PBS -l select=1:ncpus=20:mem=96G:ngpus=4
+#PBS -l walltime=5:00:00
+#PBS -P 11001430
 #PBS -N ASGCN_data_preprocess
-#PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/preprocess_output.out
-#PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/preprocess_output.err
+#PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/preprocess_120_output.out
+#PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/preprocess_120_output.err
+#PBS -k oed
 
 cd $PBS_O_WORKDIR
 cd /home/users/nus/e0474114/scratch/skeleton-based-action-recognition/AS-GCN/AS-GCN/data_gen
-/home/users/nus/e0474114/Packages/anaconda3/envs/py36/bin/python ntu_gen_preprocess.py
+/home/users/nus/e0474114/Packages/anaconda3/envs/py36/bin/python ntu_gen_preprocess.py \
+--data_path ../data/NTU-RGB+D-120/nturgb+d_skeletons/ \
+--ignored_sample_path ../data/NTU-RGB+D-120/NTU_RGBD120_samples_with_missing_skeletons.txt \
+--out_folder ../data/nturgb_d_120/

@@ -1,7 +1,6 @@
 work_dir: ./work_dir/recognition/ntu-xsub/AS_GCN
-
-weights1: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch86_model1.pt
-weights2: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch86_model2.pt
+weights1: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch79_model1.pt
+weights2: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch79_model2.pt
 
 feeder: feeder.feeder.Feeder
 train_feeder_args:
@@ -16,6 +15,10 @@ test_feeder_args:
   random_move: False
   repeat_pad: True
   down_sample: True
+  permutate_by_frames: False
+  permutate_by_clips: True
+  num_frames_per_clip: 10
+  num_clips_per_video: 4
 
 model1: net.as_gcn.Model
 model1_args:
@@ -37,18 +40,13 @@ model2_args:
   n_hid_dec: 128
   node_num: 25
 
-weight_decay: 0.0001
-base_lr1: 0.1
-base_lr2: 0.0005
-step: [50, 70, 90]
-
 device: [0,1,2,3]
 batch_size: 32
 test_batch_size: 32
-start_epoch: 87
-num_epoch: 100
 num_worker: 4
 
 max_hop_dir: max_hop_4
 lamda_act_dir: lamda_05
 lamda_act: 0.5
+
+phase: test

@@ -242,3 +242,72 @@ def repeat_pading(data_numpy):
                     break
     data_numpy = np.transpose(data_tmp, [3,1,2,0])
     return data_numpy
+
+def permutate_by_frame(data_numpy, num_frames_per_clip):
+    index = (data_numpy.sum(0).sum(-1).sum(-1)!=0)
+    num_frames = index.sum()
+    
+    if num_frames>num_frames_per_clip:
+        num_clips = int(np.ceil(num_frames/num_frames_per_clip))
+        num_frames_last_clip = num_frames - num_frames_per_clip*(num_clips-1)
+        normal_clips = np.zeros([num_clips-1, data_numpy.shape[0], num_frames_per_clip,\
+                                 data_numpy.shape[2], data_numpy.shape[3]])
+        last_clip = np.zeros([data_numpy.shape[0], num_frames_last_clip, \
+                              data_numpy.shape[2], data_numpy.shape[3]])
+            
+        for i in range(num_clips):
+            if i<num_clips-1:
+                normal_clips[i,:,:,:,:] = data_numpy[:,i*num_frames_per_clip:(i+1)*num_frames_per_clip,:,:]
+            else:
+                last_clip = data_numpy[:,i*num_frames_per_clip:num_frames,:,:]
+        
+        Seq = np.arange(num_clips)
+        random.shuffle(Seq)
+        
+        start_frame = 0
+        for i in Seq:
+            if i<num_clips-1:
+                end_frame = start_frame + num_frames_per_clip
+                data_numpy[:,start_frame:end_frame,:,:] = normal_clips[i,:,:,:,:]
+            else:
+                end_frame = start_frame + num_frames_last_clip
+                data_numpy[:,start_frame:end_frame,:,:] = last_clip
+            start_frame = end_frame
+        if end_frame!=num_frames:
+            raise ValueError('permutate_by_frame is working wrongly!')
+        
+    return data_numpy
+
+def permutate_by_clip(data_numpy, num_clips_per_video):
+    index = (data_numpy.sum(0).sum(-1).sum(-1)!=0)
+    num_frames = index.sum()
+    
+    if num_frames>num_clips_per_video:
+        num_frames_per_clip = int(np.ceil(num_frames/num_clips_per_video))
+        num_frames_last_clip = num_frames - num_frames_per_clip*(num_clips_per_video-1)
+        normal_clips = np.zeros([num_clips_per_video-1, data_numpy.shape[0], num_frames_per_clip,\
+                                 data_numpy.shape[2], data_numpy.shape[3]])
+        last_clip = np.zeros([data_numpy.shape[0], num_frames_last_clip, \
+                              data_numpy.shape[2], data_numpy.shape[3]])
+            
+        for i in range(num_clips_per_video):
+            if i<num_clips_per_video-1:
+                normal_clips[i,:,:,:,:] = data_numpy[:,i*num_frames_per_clip:(i+1)*num_frames_per_clip,:,:]
+            else:
+                last_clip = data_numpy[:,i*num_frames_per_clip:num_frames,:,:]
+        
+        Seq = np.arange(num_clips_per_video)
+        random.shuffle(Seq)
+        
+        start_frame = 0
+        for i in Seq:
+            if i<num_clips_per_video-1:
+                end_frame = start_frame + num_frames_per_clip
+                data_numpy[:,start_frame:end_frame,:,:] = normal_clips[i,:,:,:,:]
+            else:
+                end_frame = start_frame + num_frames_last_clip
+                data_numpy[:,start_frame:end_frame,:,:] = last_clip
+            start_frame = end_frame
+        if end_frame!=num_frames:
+            raise ValueError('permutate_by_clip is working wrongly!')
+    return data_numpy

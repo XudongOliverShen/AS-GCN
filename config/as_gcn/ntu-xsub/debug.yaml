@@ -1,18 +1,18 @@
 work_dir: ./work_dir/recognition/ntu-xsub/AS_GCN
 
-weights1: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch86_model1.pt
-weights2: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch86_model2.pt
+weights1: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch99_model1.pt
+weights2: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch99_model2.pt
 
 feeder: feeder.feeder.Feeder
 train_feeder_args:
-  data_path: ./data/nturgb_d/xsub/train_data_joint_pad.npy
-  label_path: ./data/nturgb_d/xsub/train_label.pkl
+  data_path: ./data/nturgb_debug/xsub/train_data_joint_pad.npy
+  label_path: ./data/nturgb_debug/xsub/train_label.pkl
   random_move: True
   repeat_pad: True
   down_sample: True
 test_feeder_args:
-  data_path: ./data/nturgb_d/xsub/val_data_joint_pad.npy
-  label_path: ./data/nturgb_d/xsub/val_label.pkl
+  data_path: ./data/nturgb_debug/xsub/val_data_joint_pad.npy
+  label_path: ./data/nturgb_debug/xsub/val_label.pkl
   random_move: False
   repeat_pad: True
   down_sample: True
@@ -42,11 +42,11 @@ base_lr1: 0.1
 base_lr2: 0.0005
 step: [50, 70, 90]
 
-device: [0,1,2,3]
-batch_size: 32
-test_batch_size: 32
-start_epoch: 87
-num_epoch: 100
+device: [0]
+batch_size: 8
+test_batch_size: 8
+start_epoch: 100
+num_epoch: 110
 num_worker: 4
 
 max_hop_dir: max_hop_4
