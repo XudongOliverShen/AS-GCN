@@ -1,12 +1,11 @@
 #!/bin/bash
 #PBS -q dgx
 #PBS -l select=1:ncpus=20:mem=96G:ngpus=4
-#PBS -l walltime=24:00:00
+#PBS -l walltime=48:00:00
 #PBS -P 11001430
-#PBS -N train_MP
-#PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log
-#PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log
-#PBS -koed
+#PBS -N train_xview
+#PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/train_xview.out
+#PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/train_xview.err
 
 cd $PBS_O_WORKDIR
 nscc-docker run --lustre --ipc=host nscc/local/pytorch:latest <<EOF

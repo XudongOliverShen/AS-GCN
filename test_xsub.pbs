@@ -1,0 +1,14 @@
+#!/bin/bash
+#PBS -q dgx
+#PBS -l select=1:ncpus=20:mem=96G:ngpus=4
+#PBS -l walltime=4:00:00
+#PBS -P 11001430
+#PBS -N test_xsub
+#PBS -o /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/test_permutation.out
+#PBS -e /scratch/users/nus/e0474114/skeleton-based-action-recognition/AS-GCN/AS-GCN/log/test_permutation.err
+
+cd $PBS_O_WORKDIR
+nscc-docker run --lustre --ipc=host nscc/local/pytorch:latest <<EOF
+cd /home/users/nus/e0474114/scratch/skeleton-based-action-recognition/AS-GCN/AS-GCN
+/home/users/nus/e0474114/Packages/anaconda3/envs/py36/bin/python main_test.py recognition -c config/as_gcn/ntu-xsub/permutation_test/permutate_by_frame_10.yaml
+EOF

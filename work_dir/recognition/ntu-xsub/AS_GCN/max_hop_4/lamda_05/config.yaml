@@ -1,0 +1,70 @@
+# command line: e:/nus/research/skeleton-based-action-recognition/as-gcn/main_test.py recognition -c config/as_gcn/ntu-xsub/debug.yaml
+
+base_lr1: 0.1
+base_lr2: 0.0005
+batch_size: 8
+config: config/as_gcn/ntu-xsub/debug.yaml
+debug: false
+device:
+- 0
+eval_interval: 5
+feeder: feeder.feeder.Feeder
+ignore_weights: []
+lamda_act: 0.5
+lamda_act_dir: lamda_05
+log_interval: 100
+max_hop_dir: max_hop_4
+model1: net.as_gcn.Model
+model1_args:
+    dropout: 0.5
+    edge_importance_weighting: true
+    graph_args:
+        layout: ntu-rgb+d
+        max_hop: 4
+        strategy: spatial
+    in_channels: 3
+    num_class: 60
+model2: net.utils.adj_learn.AdjacencyLearn
+model2_args:
+    edge_types: 3
+    n_hid_dec: 128
+    n_hid_enc: 128
+    n_in_dec: 3
+    n_in_enc: 150
+    node_num: 25
+nesterov: true
+num_epoch: 110
+num_worker: 4
+optimizer: SGD
+pavi_log: false
+phase: train
+print_log: true
+save_interval: 1
+save_log: true
+save_result: false
+show_topk:
+- 1
+- 5
+start_epoch: 100
+step:
+- 50
+- 70
+- 90
+test_batch_size: 8
+test_feeder_args:
+    data_path: ./data/nturgb_debug/xsub/val_data_joint_pad.npy
+    down_sample: true
+    label_path: ./data/nturgb_debug/xsub/val_label.pkl
+    random_move: false
+    repeat_pad: true
+train_feeder_args:
+    data_path: ./data/nturgb_debug/xsub/train_data_joint_pad.npy
+    down_sample: true
+    label_path: ./data/nturgb_debug/xsub/train_label.pkl
+    random_move: true
+    repeat_pad: true
+use_gpu: true
+weight_decay: 0.0001
+weights1: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch99_model1.pt
+weights2: ./work_dir/recognition/ntu-xsub/AS_GCN/max_hop_4/lamda_05/epoch99_model2.pt
+work_dir: ./work_dir/recognition/ntu-xsub/AS_GCN
